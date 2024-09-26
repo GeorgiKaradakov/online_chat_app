@@ -1,28 +1,14 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { HashRouter as Router, Routes, Route  } from "react-router-dom";
+import Home from "./pages/Home.jsx";
 
 function App() {
-  const [data, setArray] = useState([]);
-  const fetchAPI = async () => {
-    const response = await axios.get("http://localhost:6969/api/date");
-    setArray(response.data.date);
-  };
-
-  useEffect(() => {
-    fetchAPI();
-  }, []);
-
   return (
-    <p className="text-white text-5xl">
-      date:{" "}
-      {data.map((value, key) => (
-        <span key={key}>
-          {value}
-          {key === data.length - 1 ? "" : "/"}
-        </span>
-      ))}
-    </p>
-  );
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+      </Routes>
+    </Router>
+  )
 }
 
 export default App;
