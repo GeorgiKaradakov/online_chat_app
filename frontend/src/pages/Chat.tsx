@@ -1,22 +1,25 @@
 import Button from "../components/Button";
-import {send_img} from "../assets/svgs.tsx"
+import {close_img, send_img} from "../assets/svgs.tsx"
 
 //TODO: Make different color messages for boys and girls
 
 function Chat(){
   return (
-    <div className="bg-cont h-[90%] w-[90%] md:w-[70%] md:h-[70%]">
-      <div className="p-[3px] w-full h-full bg-[#242424] rounded-lg flex flex-col justify-between">
+      <div className="bg-cont h-[90%] w-[90%] md:w-[70%] md:h-[70%]">
+        <div className="p-[3px] w-full h-full bg-[#242424] rounded-lg flex flex-col justify-between">
+          <div className="h-[90%] w-[100%] border-4 border-sky-400 rounded-lg" id="chat_log">
+            <div className="p-1 pr-2 w-full flex justify-end">
+              <Button img={close_img("size-9")} className="w-[40px] hover:cursor-pointer"/>
+            </div>
+          </div>
 
-        <div className="h-[90%] w-[100%] border-4 border-sky-400 rounded-lg" id="chat_log"></div>
+          <div className="p-2 h-[8%] w-[100%] flex border-4 border-sky-400 rounded-lg md:mt-3 md:h-1/6 lg:h-[10%]">
+            <input className="h-full w-5/6 bg-transparent text-white focus:outline-none focus:ring-0 focus:border-transparent" type="text" name="msg_cont" placeholder="message.."/>
+            <Button img={send_img()} className="h-full w-1/6 hover:cursor-pointer"/>
+          </div>
 
-        <div className="p-2 h-[8%] w-[100%] flex border-4 border-sky-400 rounded-lg md:mt-3 md:h-1/6 lg:h-[10%]">
-          <input className="h-full w-5/6 bg-transparent text-white focus:outline-none focus:ring-0 focus:border-transparent" type="text" name="msg_cont" placeholder="message.."/>
-          <Button img={send_img()} className="h-full w-1/6"/>
         </div>
-
       </div>
-    </div>
   );
 }
 
