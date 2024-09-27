@@ -6,6 +6,7 @@ function Home(){
   const fetchAPI = async () => {
     const response = await axios.get("http://localhost:6969/api/date");
     setArray(response.data.date);
+    console.log(1)
   };
 
   useEffect(() => {
