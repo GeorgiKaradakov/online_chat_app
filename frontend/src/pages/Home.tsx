@@ -1,27 +1,18 @@
-import {useState, useEffect} from "react";
-import axios from "axios";
+import React from 'react';
+import Button from '../components/Button';
 
 function Home(){
-  const [data, setArray] = useState([]);
-  const fetchAPI = async () => {
-    const response = await axios.get("http://localhost:6969/api/date");
-    setArray(response.data.date);
-  };
-
-  useEffect(() => {
-    fetchAPI();
-  }, []);
-
   return (
-    <p className="text-white text-5xl">
-      date:{" "}
-      {data.map((value, key) => (
-        <span key={key}>
-          {value}
-          {key === data.length - 1 ? "" : "/"}
-        </span>
-      ))}
-    </p>
+    <>
+      <nav className="z-[-2] flex flex-col pl-2 pr-2 bg-slate-950 place-content-center space-y-10 border-sky-400">
+        <div className="bg-cont1 text-white flex flex-col justify-center items-center">
+          <Button label='Start' onClick={console.log}/>
+        </div>
+        <div className="bg-cont2 text-white flex flex-col justify-center items-center">
+          <Button label="Exit" onClick={console.log}/>
+        </div>
+      </nav>
+    </>
   );
 }
 
