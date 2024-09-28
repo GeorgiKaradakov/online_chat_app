@@ -1,5 +1,6 @@
 import Button from "../components/Button";
 import {close_img, send_img} from "../assets/svgs.tsx"
+import Message from "../components/Message.tsx";
 
 //TODO: Make different color messages for boys and girls
 
@@ -7,9 +8,14 @@ function Chat(){
   return (
       <div className="bg-cont h-[90%] w-[90%] md:w-[70%] md:h-[70%]">
         <div className="p-[3px] w-full h-full bg-[#242424] rounded-lg flex flex-col justify-between">
-          <div className="h-[90%] w-[100%] border-4 border-sky-400 rounded-lg" id="chat_log">
-            <div className="p-1 pr-2 w-full flex justify-end">
+          <div className="pl-4 h-[90%] w-[100%] border-4 border-sky-400 rounded-lg" id="chat_log">
+            <div className="p-1 w-full flex justify-end">
               <Button img={close_img("size-9")} className="w-[40px] hover:cursor-pointer"/>
+            </div>
+            {/* message components go down */}
+            <div>
+              <Message gender="man" msg="Sup, guys:)aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"/>
+              <Message gender="woman" msg="Sup, sweetie:)bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"/>
             </div>
           </div>
 
