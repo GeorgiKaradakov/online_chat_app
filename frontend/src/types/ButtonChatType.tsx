@@ -1,6 +1,6 @@
 import {Component} from "react";
 
-export type buttonType = {
+export type buttonChatType = {
   text      ?: string
   img       ?: Component
   className ?: string

@@ -1,9 +1,6 @@
 import { MessageType } from "../types/MessageType";
 import { mc } from "../utils/funcs";
 
-//TODO: Show the username of the message sender
-//TODO: Show the time when message is sent
-
 const Message:React.FC<MessageType> = ({username, msg, gender, className, isSender}) => {
   const leftOrRight = `flex flex-col ${isSender ? "justify-center items-end" : "justify-center items-start"}`;
 
