@@ -1,28 +1,14 @@
-import {useState, useEffect} from "react";
-import axios from "axios";
+import Button from "../components/ButtonChat.tsx";
+
+const openPP = () => {
+  console.log("clicked")
+};
 
 function Home(){
-  const [data, setArray] = useState([]);
-  const fetchAPI = async () => {
-    const response = await axios.get("http://localhost:6969/api/date");
-    setArray(response.data.date);
-    console.log(1)
-  };
-
-  useEffect(() => {
-    fetchAPI();
-  }, []);
-
   return (
-    <p className="text-white text-5xl">
-      date:{" "}
-      {data.map((value, key) => (
-        <span key={key}>
-          {value}
-          {key === data.length - 1 ? "" : "/"}
-        </span>
-      ))}
-    </p>
+    <>
+      <Button onClick={openPP()} text="create" className="w-1/3 h-24"/>
+    </>
   );
 }
 
