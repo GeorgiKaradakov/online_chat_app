@@ -1,13 +1,21 @@
 import { MessageType } from "../types/MessageType";
 import { mc } from "../utils/funcs";
 
+//TODO: Show the username of the message sender
+//TODO: Show the time when message is sent
 
-const Message:React.FC<MessageType> = ({msg, gender, className}) => {
+const Message:React.FC<MessageType> = ({username, msg, gender, className, isSender}) => {
+  const leftOrRight = `flex flex-col ${isSender ? "justify-center items-end" : "justify-center items-start"}`;
+
   return (
-    <div className={mc(gender == "man" ? "bg-sky-400" : "bg-pink-300", "p-2 mb-3 w-fit font-bold rounded-3xl max-w-1/2 max-sm:max-w-[90%]", className)}>
-      <p className="break-words">{msg}</p>
+    <div className={`p-4 w-full ${leftOrRight}`}>
+      <p className={`${isSender ? "mr-4" : "ml-4"} w-fit font-bold text-red-300`}>{username}</p>
+      <div className={mc(isSender ? "bg-green-300" : gender == "man" ? "bg-sky-400" : "bg-pink-300", "p-2 w-fit font-bold rounded-3xl max-w-1/2 max-sm:max-w-[90%]", className)}>
+        <p className="break-words">{msg}</p>
+      </div>
     </div>
   );
 }
 
 export default Message;
+

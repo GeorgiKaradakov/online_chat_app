@@ -1,3 +1,11 @@
+/*properties for the animations*/
+@property --angle{
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+
 head,
 body {
   background-color: #242424;
@@ -19,12 +27,6 @@ body {
   position: relative;
 }
 
-@property --angle{
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
 .bg-cont::after, .bg-cont::before {
   content: '';
   position: absolute;
@@ -44,6 +46,27 @@ body {
 .bg-cont::before {
   filter: blur(1.5rem);
   opacity: 0.5;
+}
+
+/*style button on hover*/
+.button_cont:hover{
+  animation: pulse 2s infinite;
+}
+
+
+/*keyframes for the animations*/
+@keyframes pulse{
+  0%{
+    transform: scale(.90);
+  }
+
+  70%{
+    transform: scale(1);
+  }
+
+  100%{
+    transform: scale(.90);
+  }
 }
 
 @keyframes spin{
