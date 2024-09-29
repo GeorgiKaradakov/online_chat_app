@@ -1,5 +1,5 @@
 
-export type PPCreateType = {
+export type PPJoinType = {
   isOpen     ?: boolean
   closePopUp  : () => void;
   submitPopUp : () => void;

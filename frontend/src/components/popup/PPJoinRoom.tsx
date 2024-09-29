@@ -1,11 +1,13 @@
-import { PPCreateType } from "../../types/PPCreateType";
+import PPJoinType from "../../types/PPJoinType.tsx"
 import ButtonChat from "../ButtonChat";
 import RadioButton from "../radioButton";
 
+import "../../styles/popup.css";
 
-const PPCreateRoom:React.FC<PPCreateType> = ({isOpen, closePopUp, submitPopUp}) => {
+
+const PPCreateJoin:React.FC<PPJoinType> = ({isOpen, closePopUp, submitPopUp}) => {
   return (
-    <div className={`absolute w-[90%] h-1/2 bg-gray-950 flex flex-col items-center rounded-xl md:w-2/3 lg:w-1/3 ${isOpen ? "" : "hidden"}`}>
+    <div className={`${isOpen ? "animate-popup" : "hidden"} absolute w-[90%] h-1/2 bg-gray-950 flex flex-col items-center rounded-xl md:w-2/3 lg:w-1/3 `}>
 
       <input className="mt-12 text-white font-bold text-center rounded-xl bg-gray-800 w-[80%] h-1/6 focus:outline-none focus:ring-0 focus:border-transparent" placeholder="enter room code..."/>
       <input className="mt-6 text-white font-bold text-center rounded-xl bg-gray-800 w-[80%] h-1/6 focus:outline-none focus:ring-0 focus:border-transparent" placeholder="enter username..."/>
@@ -24,4 +26,4 @@ const PPCreateRoom:React.FC<PPCreateType> = ({isOpen, closePopUp, submitPopUp}) 
   )
 }
 
-export default PPCreateRoom;
+export default PPCreateJoin;
