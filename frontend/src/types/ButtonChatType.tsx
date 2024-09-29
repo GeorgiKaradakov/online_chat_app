@@ -4,5 +4,5 @@ export type buttonChatType = {
   text      ?: string
   img       ?: Component
   className ?: string
-  onClick   ?: () => {};
+  onClick   ?: () => void;
 };
