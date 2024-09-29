@@ -3,7 +3,7 @@ import PPJoinRoom from "../components/popup/PPJoinRoom.tsx"
 import ButtonChat from "../components/ButtonChat.tsx";
 
 function Home(){
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
