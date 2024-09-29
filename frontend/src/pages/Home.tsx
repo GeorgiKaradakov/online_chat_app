@@ -1,39 +1,29 @@
-import { useState } from "react";
-import ButtonChat from "../components/ButtonChat.tsx";
-import PopUpWindow from "../components/popup/PopUpWindow.tsx";
+import React from 'react';
+import Button from '../components/Button';
+import Typewriter from "../components/Typewriter";
 
-function Home(){
-  const [openCR, setOpenCR] = useState(false);
-  const [openJR, setOpenJR] = useState(false);
-
+function Home() {
   return (
     <>
-      <ButtonChat onClick={() => setOpenCR(true)} text="Create Room" className="w-1/3 h-20 mb-10"/>
-      <ButtonChat onClick={() => setOpenJR(true)} text="Join Room" className="w-1/3 h-20"/>
-      <PopUpWindow
-        popUpName="Create room"
-        inputName1="username"
-        inputName2="room_name"
-        inputPlaceHolder1="Enter username..."
-        inputPlaceHolder2="Enter room name..."
-        btnText="Create"
-        className="animate-popup-cr"
-        isOpen={openCR}
-        closePopUp={() => setOpenCR(false)}
-        submitPopUp={() => console.log('submit cr')}
-      />
-      <PopUpWindow
-        popUpName="Join room"
-        inputName1="room_code"
-        inputName2="username"
-        inputPlaceHolder1="Enter code..."
-        inputPlaceHolder2="Enter username..."
-        btnText="Enter"
-        className="animate-popup-jr"
-        isOpen={openJR}
-        closePopUp={() => setOpenJR(false)}
-        submitPopUp={() => console.log('submit jr')}
-      />
+      <nav className="w-1/4 h-full lg:w-48 z-[-2] flex flex-col bg-slate-950 place-content-center items-center space-y-3 border-r-2 border-sky-400 p-3">
+        <div className="w-full h-[7%] text-sky-400">
+          <Button 
+            className="hover:bg-slate-900 hover:cursor-pointer w-full h-full border-2 border-sky-400 rounded-3xl" 
+            label="Start" 
+            onClick={console.log} 
+          />
+        </div>
+        <div className="w-full h-[7%] text-sky-400">
+          <Button 
+            className="hover:bg-slate-900 hover:cursor-pointer transition w-full h-full border-2 border-sky-400 rounded-3xl" 
+            label="Exit" 
+            onClick={console.log} 
+          />
+        </div>
+      </nav>
+      <h1 className="w-full text-white flex flex-col text-7xl text-center font-bold place-content-center p-3">
+        <Typewriter text="Welcome to the live chatroom, press start to chat!" delay={100} />
+      </h1>
     </>
   );
 }
