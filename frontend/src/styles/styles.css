@@ -2,6 +2,7 @@ head,
 body {
   background-image: linear-gradient(to left bottom, #1f0715, #1d0819, #1a0a1c, #160c1f, #110e22, #0f0e23, #0c0f25, #080f26, #090d27, #0c0b27, #0e0828, #110528);  width: 0.5vw;
   height: 100vh;
+  width: 100vw;
 }
 
 #root {

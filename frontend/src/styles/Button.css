@@ -1,74 +1,9 @@
-@property --angle{
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
 .custom-button {
   position: relative;
-  min-width: 130px; 
-  min-height: 50px;
-  background-color: #007bff;
-  color: white;
+  width: 100%;
+  height:25%;
   font-size: 16px;
   font-weight: bold;
-  border-radius: 20px;
-  cursor: pointer;
-  padding: 2px;
-  transition: background-color 0.3s ease;
   text-align: center;
   overflow: hidden;
-}
-
-.bg-cont1::after, .bg-cont1::before {
-  content: '';
-  position: absolute;
-  min-width: 130px;
-  min-height: 50px;
-  background-image: conic-gradient(from var(--angle), red, orange, yellow, green, blue, indigo, violet, red);
-  border-radius: 20px;
-
-  top: 44.65%;
-  left: 14.5%;
-  translate: -50% -50%;
-  z-index: -1;
-
-  animation: 3s spin linear infinite;
-}
-
-.bg-cont1::before {
-  filter: blur(1.5rem);
-  opacity: 0.5;
-}
-
-.bg-cont2::after, .bg-cont2::before {
-  content: '';
-  position: absolute;
-  min-width: 130px;
-  min-height: 50px;
-  background-image: conic-gradient(from var(--angle), red, orange, yellow, green, blue, indigo, violet, red);
-  border-radius: 20px;
-
-  top: 55.43%;
-  left: 14.5%;
-  translate: -50% -50%;
-  z-index: -1;
-
-  animation: 3s spin linear infinite;
-}
-
-.bg-cont2::before {
-  filter: blur(1.5rem);
-  opacity: 0.5;
-}
-
-
-@keyframes spin{
-  from{
-    --angle: 0deg;
-  }
-
-  to{
-    --angle: 360deg;
-  }
 }
