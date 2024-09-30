@@ -1,5 +1,6 @@
 import { buttonChatType } from "../types/ButtonChatType.tsx";
 import { mc } from "../utils/funcs.ts";
+import "../styles/Button.css"
 
 const ButtonChat:React.FC<buttonChatType> = ({className, text, img, onClick}) => {
   return (

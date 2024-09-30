@@ -32,38 +32,3 @@
   opacity: 0;
   animation: spin_pp 3s linear infinite 1s, fadeInAfter 0s 1s forwards;
 }
-
-@keyframes wiggle {
-  0% {
-    opacity: 1;
-    transform: scale(0.9) rotate(0deg);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1) rotate(2deg);
-  }
-  70% {
-    opacity: 1;
-    transform: scale(1) rotate(-2deg);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-  }
-}
-
-@keyframes spin_pp{
-  from{
-    --angle_pp: 0deg;
-  }
-
-  to{
-    --angle_pp: 360deg;
-  }
-}
-
-@keyframes fadeInAfter {
-  to {
-    opacity: 1;
-  }
-}

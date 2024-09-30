@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Typewriter.css';
 
-const Typewriter = ({ text, delay }) => {
+const Typewriter = ({text, delay }) => {
   const [currentText, setCurrentText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
     // Reset current text and index if the text prop changes
@@ -19,13 +20,15 @@ const Typewriter = ({ text, delay }) => {
       }, delay);
 
       return () => clearTimeout(timeout);
+    }else{
+      setIsFinished(true);
     }
   }, [currentIndex, text, delay]);
 
   return (
     <span>
       {currentText}
-      <span className="blinking-cursor">|</span>
+      <span className={`${isFinished ? "hidden" : "blinking-cursor"}`}>|</span>
     </span>
   );
 };
