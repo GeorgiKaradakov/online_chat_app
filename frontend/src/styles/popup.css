@@ -7,6 +7,7 @@
 .animate-popup-cr, .animate-popup-jr {
   opacity: 1;
   animation: wiggle 1s ease-in-out;
+  z-index: 40;
 }
 
 .animate-popup-cr::after {
