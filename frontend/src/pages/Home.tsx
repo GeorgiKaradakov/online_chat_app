@@ -1,17 +1,14 @@
-import {useState, React} from "react";
 import ButtonChat from "../components/ButtonChat";
 import PopUpWindow from "../components/popup/PopUpWindow";
 import Typewriter from "../components/Typewriter";
+import { controller } from "../utils/controller";
 
 import "../styles/styles.css";
 
 function Home() {
-  const [openCR, setOpenCR] = useState(false);
-  const [openJR, setOpenJR] = useState(false);
-
-  const onToggle = (setOpen: React.Dispatch<React.SetStateAction<boolean>>) => {
-    setOpen(prev => !prev);
-  };
+  const {getPPCreate, getPPJoin, getClearContents} = controller({usePPCreate: true, usePPJoin: true, clearPopUpContents: true});
+  const {openCR, changeCR} = getPPCreate!(false);
+  const {openJR, changeJR} = getPPJoin!(false);
 
   return (
     <>
@@ -23,12 +20,12 @@ function Home() {
 
         <div className="w-full h-1/2 flex flex-col justify-center items-center gap-y-10 lg:bg-black lg:h-full lg:w-1/3">
           <ButtonChat
-            onClick={() => onToggle(setOpenCR)}
+            onClick={() => changeCR()}
             text="Create room"
             className="w-2/3 h-1/6 rounded-xl bg-purple-500 text-xl text-white font-bold border-none lg:h-[10%]"
           />
           <ButtonChat
-            onClick={() => onToggle(setOpenJR)}
+            onClick={() => changeJR()}
             text="Join room"
             className="w-2/3 h-1/6 rounded-xl bg-purple-500 text-xl text-white font-bold border-none lg:h-[10%]"
           />
@@ -37,17 +34,19 @@ function Home() {
         <PopUpWindow
           isOpen={openCR}
           popUpName="Create room"
+          id="create_pp" btn_id1="cr_rb_male" btn_id2="cr_rb_female"
           inputName1="username"
           inputName2="room_name"
           inputPlaceHolder1="Enter username..."
           inputPlaceHolder2="Enter room name..."
           btnText="Create"
           className="animate-popup-cr"
-          closePopUp={() => setOpenCR(false)}
+          closePopUp={() => {changeCR(); getClearContents!();}}
           submitPopUp={() => console.log("submit cr")}
         />
         <PopUpWindow
           isOpen={openJR}
+          id="create_pp" btn_id1="jr_rb_male" btn_id2="jr_rb_female"
           popUpName="Join room"
           inputName1="room_code"
           inputName2="username"
@@ -55,7 +54,7 @@ function Home() {
           inputPlaceHolder2="Enter username..."
           btnText="Join"
           className="animate-popup-jr"
-          closePopUp={() => setOpenJR(false)}
+          closePopUp={() => {changeJR(); getClearContents!();}}
           submitPopUp={() => console.log("submit jr")}
         />
       </div>

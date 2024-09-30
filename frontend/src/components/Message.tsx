@@ -1,4 +1,4 @@
-import { MessageType } from "../types/MessageType";
+import { MessageType } from "../types/types";
 import { mc } from "../utils/funcs";
 
 const Message:React.FC<MessageType> = ({username, msg, gender, className, isSender}) => {

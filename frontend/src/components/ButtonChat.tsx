@@ -1,4 +1,4 @@
-import { buttonChatType } from "../types/ButtonChatType.tsx";
+import { buttonChatType } from "../types/types.tsx";
 import { mc } from "../utils/funcs.ts";
 import "../styles/Button.css"
 

@@ -2,7 +2,7 @@ import ButtonChat from "../components/ButtonChat.tsx";
 import {close_img, send_img} from "../assets/svgs.tsx"
 import Message from "../components/Message.tsx";
 import { useState } from "react";
-import { chatType } from "../types/chatType.tsx";
+import { chatType } from "../types/types";
 
 import "../styles/chat.css"
 
@@ -19,6 +19,7 @@ const Chat:React.FC<chatType> = ({roomName}) =>{
     {username:"John", gender:"man", msg:"10 AM? NUH UH. No way be man"},
     {username:"Anna", gender:"woman", msg:"Perfect! I’ll bring some water and maybe a few cookies. Can’t wait!"},
   ]);
+
   return (
     <div className="w-full h-full flex justify-center items-center">
       <div className="bg-cont h-[90%] w-[90%] md:w-[70%] md:h-[70%]">
