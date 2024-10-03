@@ -1,4 +1,4 @@
-import {Component} from "react";
+import {Component, RefObject} from "react";
 
 export type buttonChatType = {
   text      ?: string
@@ -21,9 +21,9 @@ export type chatType = {
 
 export type PPType = {
   isOpen           ?: boolean;
-  id                : string;
-  btn_id1           : string;
-  btn_id2           : string;
+  comp_ref          : RefObject<HTMLDivElement>;
+  btn_ref1          : RefObject<HTMLInputElement>;
+  btn_ref2          : RefObject<HTMLInputElement>;
   popUpName         : string;
   inputName1        : string;
   inputName2        : string;
@@ -36,18 +36,25 @@ export type PPType = {
 };
 
 export type controllerType = {
+  useCPPRefHooks ?: boolean
+  useJPPRefHooks ?: boolean
+  useData ?: boolean
   usePPCreate ?: boolean
   usePPJoin ?: boolean
   useCurrText ?: boolean
   useCurrInd ?: boolean
   useIsFinished ?: boolean
+  addData ?: boolean
   writeText ?: boolean
   clearPopUpContents ?: boolean
+  sendData ?: boolean
 };
 
 export type radioButtonType = {
   name : string;
-  id : string;
+  comp_ref : RefObject<HTMLInputElement>;
   className ?: string;
   text : string;
+  getData : object;
+  setData : React.Dispatch<React.SetStateAction<object>>
 };

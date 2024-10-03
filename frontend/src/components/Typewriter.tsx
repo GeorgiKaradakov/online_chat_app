@@ -1,8 +1,8 @@
 import '../styles/Typewriter.css';
-import { controller } from '../utils/controller';
+import { useController } from '../utils/controller';
 
 const Typewriter = ({text, delay }) => {
-  const {getCurrText, getCurrInd, getIsFinished, getWriteText} = controller({useCurrText: true, useCurrInd: true, useIsFinished: true, writeText: true});
+  const {getCurrText, getCurrInd, getIsFinished, getWriteText} = useController({useCurrText: true, useCurrInd: true, useIsFinished: true, writeText: true});
   const {currText, setCurrText} = getCurrText!('');
   const {currInd, setCurrInd} = getCurrInd!(0);
   const {isFinished, changeIsFinished} = getIsFinished!(false);

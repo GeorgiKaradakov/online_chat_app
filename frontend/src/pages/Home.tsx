@@ -1,12 +1,12 @@
 import ButtonChat from "../components/ButtonChat";
 import PopUpWindow from "../components/popup/PopUpWindow";
 import Typewriter from "../components/Typewriter";
-import { controller } from "../utils/controller";
+import { useController } from "../utils/controller";
 
 import "../styles/styles.css";
 
 function Home() {
-  const {getPPCreate, getPPJoin, getClearContents} = controller({usePPCreate: true, usePPJoin: true, clearPopUpContents: true});
+  const {getPPCreate, getPPJoin, ppCreateRef, cRBRef1, cRBRef2, ppJoinRef, jRBRef1, jRBRef2, getClearContents, getSendData} = useController({usePPCreate: true, usePPJoin: true, clearPopUpContents: true, sendData: true, useCPPRefHooks: true, useJPPRefHooks: true});
   const {openCR, changeCR} = getPPCreate!(false);
   const {openJR, changeJR} = getPPJoin!(false);
 
@@ -34,28 +34,28 @@ function Home() {
         <PopUpWindow
           isOpen={openCR}
           popUpName="Create room"
-          id="create_pp" btn_id1="cr_rb_male" btn_id2="cr_rb_female"
+          comp_ref={ppCreateRef!} btn_ref1={cRBRef1!} btn_ref2={cRBRef2!}
           inputName1="username"
           inputName2="room_name"
           inputPlaceHolder1="Enter username..."
           inputPlaceHolder2="Enter room name..."
           btnText="Create"
           className="animate-popup-cr"
-          closePopUp={() => {changeCR(); getClearContents!();}}
-          submitPopUp={() => console.log("submit cr")}
+          closePopUp={() => {changeCR();}}
+          submitPopUp={() => {changeCR();}}
         />
         <PopUpWindow
           isOpen={openJR}
-          id="create_pp" btn_id1="jr_rb_male" btn_id2="jr_rb_female"
           popUpName="Join room"
-          inputName1="room_code"
-          inputName2="username"
-          inputPlaceHolder1="Enter room code..."
-          inputPlaceHolder2="Enter username..."
+          comp_ref={ppJoinRef!} btn_ref1={jRBRef1!} btn_ref2={jRBRef2!}
+          inputName1="username"
+          inputName2="room_code"
+          inputPlaceHolder1="Enter username..."
+          inputPlaceHolder2="Enter room code..."
           btnText="Join"
           className="animate-popup-jr"
-          closePopUp={() => {changeJR(); getClearContents!();}}
-          submitPopUp={() => console.log("submit jr")}
+          closePopUp={() => {changeJR();}}
+          submitPopUp={() => {changeJR();}}
         />
       </div>
     </>
