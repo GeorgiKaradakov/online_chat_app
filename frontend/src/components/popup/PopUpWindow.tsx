@@ -8,7 +8,7 @@ import { useController } from "../../utils/controller";
 
 
 const PopUpWindow = forwardRef<HTMLDivElement, PPType>(
-  ({ isOpen, comp_ref, btn_ref1, btn_ref2, popUpName, inputName1, inputName2, inputPlaceHolder1, inputPlaceHolder2, btnText, className, closePopUp, submitPopUp }, ref) => {
+  ({ isOpen, comp_ref, btn_ref1, btn_ref2, popUpName, inputName1, inputName2, inputPlaceHolder1, inputPlaceHolder2, btnText, className, url, closePopUp, submitPopUp }, ref) => {
     const {getData, getAddData, getClearContents, getSendData} = useController({useData: true, addData: true, clearPopUpContents: true, sendData: true})
     const {data, setData} = getData!({
       username: '',
@@ -41,7 +41,7 @@ const PopUpWindow = forwardRef<HTMLDivElement, PPType>(
           </div>
           <div className="mt-12 px-6 flex justify-between w-full h-1/6">
             <ButtonChat onClick={() => {closePopUp(); getClearContents!(comp_ref, btn_ref1, btn_ref2, setData)}} text="Cancel" className="w-1/3 h-2/3 border-none text-white font-bold rounded-lg bg-gray-600 lg:h-3/4" />
-            <ButtonChat onClick={() => {submitPopUp(); getSendData!(data)}} text={btnText} className="w-1/3 h-2/3 border-none text-white font-bold rounded-lg bg-purple-500 lg:h-3/4" />
+            <ButtonChat onClick={() => {submitPopUp(); getSendData!(data, url);}} text={btnText} className="w-1/3 h-2/3 border-none text-white font-bold rounded-lg bg-purple-500 lg:h-3/4" />
           </div>
         </div>
       </div>

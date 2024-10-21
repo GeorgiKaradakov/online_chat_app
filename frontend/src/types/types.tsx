@@ -1,8 +1,8 @@
-import {Component, RefObject} from "react";
+import {RefObject} from "react";
 
 export type buttonChatType = {
   text      ?: string
-  img       ?: Component
+  img       ?: React.ReactNode
   className ?: string
   onClick   ?: () => void;
 };
@@ -13,10 +13,6 @@ export type MessageType = {
   gender ?: string
   className ?: string
   isSender ?: boolean
-};
-
-export type chatType = {
-  roomName : string
 };
 
 export type PPType = {
@@ -31,6 +27,7 @@ export type PPType = {
   inputPlaceHolder2 : string;
   btnText           : string;
   className         : string;
+  url               : string;
   closePopUp        : () => void;
   submitPopUp       : () => void;
 };

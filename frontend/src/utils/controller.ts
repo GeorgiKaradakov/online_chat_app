@@ -1,6 +1,7 @@
-import {useEffect, useState, useRef, RefObject} from "react";
+import { useEffect, useState, useRef, RefObject } from "react";
 import { controllerType } from "../types/types";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const useController = (options: controllerType) => {
   const ppCreateRef = useRef<HTMLDivElement>(null);
@@ -9,69 +10,74 @@ export const useController = (options: controllerType) => {
   const ppJoinRef = useRef<HTMLDivElement>(null);
   const jRBRef1 = useRef<HTMLInputElement>(null);
   const jRBRef2 = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   const useData = (initVal: object) => {
     const [data, setData] = useState(initVal);
-    return {data, setData};
+    return { data, setData };
   };
 
   const usePPCreate = (initVal: boolean) => {
     const [openCR, setOpenCR] = useState(initVal);
-    const changeCR = () => setOpenCR(prev => !prev);
+    const changeCR = () => setOpenCR((prev) => !prev);
 
-    return {openCR, changeCR};
-  }
+    return { openCR, changeCR };
+  };
 
   const usePPJoin = (initVal: boolean) => {
     const [openJR, setOpenJR] = useState(initVal);
-    const changeJR = () => setOpenJR(prev => !prev);
+    const changeJR = () => setOpenJR((prev) => !prev);
 
-    return {openJR, changeJR};
-  }
-
+    return { openJR, changeJR };
+  };
 
   const useCurrText = (initVal: string) => {
     const [currText, setCurrText] = useState(initVal);
-    return {currText, setCurrText};
-  }
+    return { currText, setCurrText };
+  };
 
   const useCurrInd = (initVal: number) => {
     const [currInd, setCurrInd] = useState(initVal);
-    return {currInd, setCurrInd};
-  }
+    return { currInd, setCurrInd };
+  };
 
-  const useIsFinished= (initVal: boolean) => {
+  const useIsFinished = (initVal: boolean) => {
     const [isFinished, setIsFinished] = useState(initVal);
-    const changeIsFinished = () => setIsFinished(prev => !prev);
+    const changeIsFinished = () => setIsFinished((prev) => !prev);
 
-    return {isFinished, changeIsFinished};
-  }
+    return { isFinished, changeIsFinished };
+  };
 
-  const addData = (e: React.ChangeEvent<HTMLInputElement>, data: object, setData: React.Dispatch<React.SetStateAction<object>>, isRB: boolean) => {
-    if(isRB){
+  const addData = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    data: object,
+    setData: React.Dispatch<React.SetStateAction<object>>,
+    isRB: boolean,
+  ) => {
+    if (isRB) {
       setData({
         ...data,
-        [e.target.name]: e.target.checked ? e.target.value : ''
-      })
-    }else{
+        [e.target.name]: e.target.checked ? e.target.value : "",
+      });
+    } else {
       setData({
         ...data,
-        [e.target.name]: e.target.value
-      })
+        [e.target.name]: e.target.value,
+      });
     }
   };
 
- const useWriteText = (
+  const useWriteText = (
     currInd: number,
     setCurrInd: React.Dispatch<React.SetStateAction<number>>,
     setCurrText: React.Dispatch<React.SetStateAction<string>>,
     changeIsFinished: () => void,
     text: string,
-    delay: number
+    delay: number,
   ) => {
     useEffect(() => {
       setCurrInd(0);
-      setCurrText('');
+      setCurrText("");
     }, [setCurrInd, setCurrText]);
 
     useEffect(() => {
@@ -92,40 +98,41 @@ export const useController = (options: controllerType) => {
     ppRef: RefObject<HTMLDivElement>,
     ppRBMale: RefObject<HTMLInputElement>,
     ppRBFemale: RefObject<HTMLInputElement>,
-    setData: React.Dispatch<React.SetStateAction<object>>
+    setData: React.Dispatch<React.SetStateAction<object>>,
   ) => {
-    if(ppRBMale.current && ppRBFemale.current){
+    if (ppRBMale.current && ppRBFemale.current) {
       ppRBMale.current.checked = false;
       ppRBFemale.current.checked = false;
     }
 
-    if(ppRef.current){
-      const inputs = ppRef.current.querySelectorAll('input');
-      inputs.forEach(input => {
-        input.value = '';
-      })
+    if (ppRef.current) {
+      const inputs = ppRef.current.querySelectorAll("input");
+      inputs.forEach((input) => {
+        input.value = "";
+      });
     }
 
     setData({
-      username: '',
-      room_name: '',
-      room_code: '',
-      gender: '',
-    })
+      username: "",
+      room_name: "",
+      room_code: "",
+      gender: "",
+    });
   };
 
-  const sendData = async (
-    data: object
-  ) => {
+  const sendData = async (data: object, url: string) => {
     try {
-      const response = await axios.post('http://localhost:6969/api/data', JSON.stringify(data), {
+      const response = await axios.post(url, JSON.stringify(data), {
+        withCredentials: true,
         headers: {
-          'Content-Type': 'application/json'
-        }
+          "Content-Type": "application/json",
+        },
       });
-      console.log(response.data)
+
+      localStorage.setItem("room_name", response.data.room_name);
+      navigate(`chat_room/${response.data.room_id}`);
     } catch (error) {
-      console.log('You got an error: ', error);
+      console.log("You got an error: ", error);
     }
   };
 
@@ -162,40 +169,40 @@ export const useController = (options: controllerType) => {
   // };
 
   const result: Partial<{
-    ppCreateRef: typeof ppCreateRef,
-    cRBRef1: typeof cRBRef1,
-    cRBRef2: typeof cRBRef2,
-    ppJoinRef: typeof ppJoinRef,
-    jRBRef1: typeof jRBRef1,
-    jRBRef2: typeof jRBRef2,
-    getData: typeof useData,
-    getPPCreate: typeof usePPCreate,
-    getPPJoin: typeof usePPJoin,
-    getCurrText: typeof useCurrText,
-    getCurrInd: typeof useCurrInd,
-    getIsFinished: typeof useIsFinished,
-    getAddData: typeof addData,
-    getWriteText: typeof useWriteText,
-    getClearContents: typeof clearPopUpContents
-    getSendData: typeof sendData
+    ppCreateRef: typeof ppCreateRef;
+    cRBRef1: typeof cRBRef1;
+    cRBRef2: typeof cRBRef2;
+    ppJoinRef: typeof ppJoinRef;
+    jRBRef1: typeof jRBRef1;
+    jRBRef2: typeof jRBRef2;
+    getData: typeof useData;
+    getPPCreate: typeof usePPCreate;
+    getPPJoin: typeof usePPJoin;
+    getCurrText: typeof useCurrText;
+    getCurrInd: typeof useCurrInd;
+    getIsFinished: typeof useIsFinished;
+    getAddData: typeof addData;
+    getWriteText: typeof useWriteText;
+    getClearContents: typeof clearPopUpContents;
+    getSendData: typeof sendData;
   }> = {};
 
-  if(options.useData)result.getData = useData;
-  if(options.usePPJoin)result.getPPJoin = usePPJoin;
-  if(options.usePPCreate)result.getPPCreate = usePPCreate;
-  if(options.useCurrText)result.getCurrText = useCurrText;
-  if(options.useCurrInd)result.getCurrInd = useCurrInd;
-  if(options.useIsFinished)result.getIsFinished = useIsFinished;
-  if(options.addData)result.getAddData = addData;
-  if(options.writeText)result.getWriteText= useWriteText;
-  if(options.clearPopUpContents)result.getClearContents = clearPopUpContents;
-  if(options.sendData)result.getSendData = sendData;
-  if(options.useCPPRefHooks){
+  if (options.useData) result.getData = useData;
+  if (options.usePPJoin) result.getPPJoin = usePPJoin;
+  if (options.usePPCreate) result.getPPCreate = usePPCreate;
+  if (options.useCurrText) result.getCurrText = useCurrText;
+  if (options.useCurrInd) result.getCurrInd = useCurrInd;
+  if (options.useIsFinished) result.getIsFinished = useIsFinished;
+  if (options.addData) result.getAddData = addData;
+  if (options.writeText) result.getWriteText = useWriteText;
+  if (options.clearPopUpContents) result.getClearContents = clearPopUpContents;
+  if (options.sendData) result.getSendData = sendData;
+  if (options.useCPPRefHooks) {
     result.ppCreateRef = ppCreateRef;
     result.cRBRef1 = cRBRef1;
     result.cRBRef2 = cRBRef2;
   }
-  if(options.useJPPRefHooks){
+  if (options.useJPPRefHooks) {
     result.ppJoinRef = ppJoinRef;
     result.jRBRef1 = jRBRef1;
     result.jRBRef2 = jRBRef2;
