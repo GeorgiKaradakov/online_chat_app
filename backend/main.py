@@ -28,17 +28,13 @@ def create_room():
         user.room_id = new_room.id
         new_room.user_count += 1
         db.session.commit()
-        print(user.room_id)
     else:
         new_user = User(username=username, gender=data.get('gender'), room_id=new_room.id)
         db.session.add(new_user)
         new_room.user_count += 1
         db.session.commit()
-        print(new_user.room_id)
         session['user_id'] = new_user.id
 
-    print(new_room.user_count)
-    print(new_room.id)
 
     response = {"message": "Data received successfully", "room_name": new_room.name, 'room_id': new_room.id}
     return jsonify(response), 200
@@ -72,9 +68,8 @@ def join_room():
         db.session.commit()
         session['user_id'] = new_user.id
 
-    print(room.user_count)
 
-    return jsonify({'Message': 'User successfully added to the room!'}), 200
+    return jsonify({'Message': 'User successfully added to the room!', 'room_id': room.id}), 200
 
 
 if __name__ == '__main__':
