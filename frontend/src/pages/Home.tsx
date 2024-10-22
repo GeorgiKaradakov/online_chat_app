@@ -16,9 +16,12 @@ function Home() {
     <>
       <div className={`${openCR ? "" : (openJR ? "" : "hidden")} absolute top-0 left-0 w-full h-full z-20 backdrop-blur`}></div>
       <div className="w-full h-full flex flex-col justify-center items-center max-lg:gap-y-10 lg:flex-row-reverse">
-        <h1 className="p-3 mt-6 w-full text-white text-7xl text-center font-bold max-sm:text-2xl max-md:text-4xl md:text-5xl md:px-8">
-          <Typewriter text="Welcome to the live chatroom, press Create room to create your own room which other people can join with code or press join room if you have a code for another room!" delay={50} />
-        </h1>
+        <div className="w-full flex flex-col space-y-20 justify-center items-center lg:space-y-40">
+          <h1 className="text-white text-7xl font-bold max-sm:text-3xl max-md:text-4xl md:text-5xl">Welcome to the live chatroom</h1>
+          <h1 className="p-3 mt-6 w-full  text-white text-7xl text-center lg:w-[80%] max-sm:text-2xl max-md:text-4xl md:text-5xl md:px-8">
+            <Typewriter text="Press Create room to create your own room which other people can join with code or press join room if you have a code for another room!" delay={50} />
+          </h1>
+        </div>
 
         <div className="w-full h-1/2 flex flex-col justify-center items-center gap-y-10 lg:bg-black lg:h-full lg:w-1/3">
           <ButtonChat
