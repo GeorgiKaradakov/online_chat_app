@@ -1,6 +1,7 @@
 import secrets
 from flask import Flask, jsonify, request, session
 from flask_cors import CORS
+from flask_session import Session
 # from flask_socketio import SocketIO
 from models import db, User, Room
 from config import AppConfig
@@ -8,8 +9,10 @@ from config import AppConfig
 app = Flask(__name__)
 app.config.from_object(AppConfig)
 
+Session(app)
+
 db.init_app(app)
-CORS(app, supports_credentials=True)
+CORS(app, supports_credentials=True, origins=['http://localhost:5173'])
 
 @app.route('/create_room', methods=['POST'])
 def create_room():
@@ -26,6 +29,8 @@ def create_room():
     if 'user_id' in session:
         user = User.query.filter_by(id=session['user_id']).first()
         user.room_id = new_room.id
+        if user.username != username:
+            user.username = username
         new_room.user_count += 1
         db.session.commit()
     else:
@@ -35,8 +40,7 @@ def create_room():
         db.session.commit()
         session['user_id'] = new_user.id
 
-
-    response = {"message": "Data received successfully", "room_name": new_room.name, 'room_id': new_room.id}
+    response = {"message": "Data received successfully", 'room_id': new_room.id}
     return jsonify(response), 200
 
 @app.route('/join_room', methods=['POST'])
@@ -60,6 +64,8 @@ def join_room():
     if 'user_id' in session:
         user = User.query.get(session['user_id'])
         user.room_id = room.id
+        if user.username != username:
+            user.username = username
         db.session.commit()
 
     else:
@@ -68,9 +74,19 @@ def join_room():
         db.session.commit()
         session['user_id'] = new_user.id
 
-
     return jsonify({'Message': 'User successfully added to the room!', 'room_id': room.id}), 200
 
+
+@app.route('/get_name', methods=['GET'])
+def get_room_name():
+    if 'user_id' not in session:
+        return jsonify({'error': 'You are not authorized to be here!!'})
+
+    user = User.query.filter_by(id = session['user_id']).first()
+
+    return jsonify({
+        'room_name': Room.query.filter_by(id = user.room_id).first().name
+    })
 
 if __name__ == '__main__':
     with app.app_context():

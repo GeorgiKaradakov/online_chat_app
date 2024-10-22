@@ -129,7 +129,6 @@ export const useController = (options: controllerType) => {
         },
       });
 
-      localStorage.setItem("room_name", response.data.room_name);
       navigate(`chat_room/${response.data.room_id}`);
     } catch (error) {
       console.log("You got an error: ", error);

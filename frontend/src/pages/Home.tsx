@@ -1,7 +1,7 @@
 import ButtonChat from "../components/ButtonChat";
 import PopUpWindow from "../components/popup/PopUpWindow";
 import Typewriter from "../components/Typewriter";
-import { useController } from "../utils/controller";
+import { useController } from "../controllers/controller.ts";
 
 import { API } from "../utils/constants.ts"
 

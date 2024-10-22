@@ -4,7 +4,7 @@ import RadioButton from "../radioButton";
 
 import "../../styles/popup.css";
 import { useEffect, forwardRef } from "react";
-import { useController } from "../../utils/controller";
+import { useController } from "../../controllers/controller";
 
 
 const PopUpWindow = forwardRef<HTMLDivElement, PPType>(

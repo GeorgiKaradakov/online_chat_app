@@ -1,8 +1,7 @@
-
-
-const BASE_URL = 'http://localhost:6969';
+const BASE_URL = "http://localhost:6969";
 
 export const API = {
   CREATE_ROOM: `${BASE_URL}/create_room`,
   JOIN_ROOM: `${BASE_URL}/join_room`,
+  GET_NAME_ROOM: `${BASE_URL}/get_name`,
 };

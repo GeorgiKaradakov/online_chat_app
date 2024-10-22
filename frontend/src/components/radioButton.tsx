@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import { radioButtonType } from "../types/types";
 import { mc } from "../utils/funcs";
-import { useController } from "../utils/controller";
+import { useController } from "../controllers/controller";
 
 
 const RadioButton = forwardRef<HTMLInputElement, radioButtonType>(({name, comp_ref, className, text, getData, setData}, ref) => {
