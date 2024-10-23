@@ -13,6 +13,7 @@ export type MessageType = {
   gender ?: string
   className ?: string
   isSender ?: boolean
+  fromServer : boolean
 };
 
 export type PPType = {

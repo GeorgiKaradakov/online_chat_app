@@ -14,7 +14,7 @@ class User(db.Model):
     id = db.Column(db.String(12), primary_key=True, default=lambda: generate_random_id(12, User), unique=True, nullable=False)
     username = db.Column(db.String(50), nullable=False)
     gender = db.Column(Enum(GenderEnum), nullable=False)
-    room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
+    room_id = db.Column(db.String(12), db.ForeignKey('room.id'), nullable=True)
 
 class Room(db.Model):
     id = db.Column(db.String(12), primary_key=True, default=lambda: generate_random_id(12, Room), unique=True, nullable=False)
@@ -26,5 +26,5 @@ class Room(db.Model):
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(500), nullable=False)
-    username = db.Column(db.String(50), nullable=False)
-    room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
+    user_id = db.Column(db.String(12), db.ForeignKey('user.id'), nullable=True)
+    room_id = db.Column(db.String(12), db.ForeignKey('room.id'))

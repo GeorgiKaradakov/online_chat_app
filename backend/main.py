@@ -1,21 +1,23 @@
-import secrets
 from flask import Flask, jsonify, request, session
 from flask_cors import CORS
 from flask_session import Session
-# from flask_socketio import SocketIO
-from models import db, User, Room
+from flask_socketio import SocketIO, emit,  join_room
+from models import Message, db, User, Room
 from config import AppConfig
+from queries import get_gender, get_room_code, get_room_id, get_room_name, get_username
 
 app = Flask(__name__)
 app.config.from_object(AppConfig)
+socket = SocketIO(app, cors_allowed_origins='http://localhost:5173')
 
 Session(app)
 
 db.init_app(app)
 CORS(app, supports_credentials=True, origins=['http://localhost:5173'])
 
+
 @app.route('/create_room', methods=['POST'])
-def create_room():
+def create_chat_room():
     data = request.get_json()
     if not data:
         return jsonify({"error": "No data provided"}), 400
@@ -44,7 +46,7 @@ def create_room():
     return jsonify(response), 200
 
 @app.route('/join_room', methods=['POST'])
-def join_room():
+def join_chat_room():
     data = request.get_json()
     if not data:
         return jsonify({"error": "No data provided"}), 400
@@ -62,7 +64,7 @@ def join_room():
     db.session.commit()
 
     if 'user_id' in session:
-        user = User.query.get(session['user_id'])
+        user = User.query.filter_by(id=session['user_id']).first()
         user.room_id = room.id
         if user.username != username:
             user.username = username
@@ -77,19 +79,76 @@ def join_room():
     return jsonify({'Message': 'User successfully added to the room!', 'room_id': room.id}), 200
 
 
-@app.route('/get_name', methods=['GET'])
-def get_room_name():
-    if 'user_id' not in session:
-        return jsonify({'error': 'You are not authorized to be here!!'})
-
-    user = User.query.filter_by(id = session['user_id']).first()
-
+@app.route('/is_authorized', methods=['GET'])
+def is_authorized():
+    print(session)
     return jsonify({
-        'room_name': Room.query.filter_by(id = user.room_id).first().name
+        'is_authorized': True if session else False
     })
+
+@socket.on('join')
+def user_join():
+    print(session)
+    if 'user_id' not in session:
+        emit('auth_error', room=request.sid)
+        return
+
+    user_id = session['user_id']
+    room_name = get_room_name(user_id)
+    room_code = get_room_code(user_id)
+    username = get_username(user_id)
+    room_id = get_room_id(room_code)
+
+    join_room(room_code)
+
+    new_message = Message(content=f'${username} has joined the chat room! :)', user_id=None, room_id=room_id)
+    db.session.add(new_message)
+    db.session.commit()
+
+    print(request.sid)
+
+    emit('join_success', {'roomName': room_name})
+    emit('new_message', room=room_code)
+
+@socket.on('send_message')
+def send_message(data):
+    if 'user_id' not in session:
+        socket.emit('auth_error')
+        return
+
+    user_id = session['user_id']
+    room_code = get_room_code(user_id)
+    room_id = get_room_id(room_code)
+
+    new_message = Message(content=data.message, user_id=user_id, room_id=room_id)
+    db.session.add(new_message)
+    db.session.commit()
+
+    socket.emit('get_messages', room=room_code)
+
+@socket.on('add_messages')
+def add_messages():
+    if 'user_id' not in session:
+        socket.emit('auth_error')
+        return
+
+    messages = []
+    room_code = get_room_code(session['user_id'])
+    room = Room.query.filter_by(room_code = room_code).first()
+
+    for message in room.messages:
+        user_id = message.user_id
+        messages.append({
+            'username': get_username(user_id) if user_id else '',
+            'msg': message.content,
+            'gender': get_gender(user_id) if user_id else '',
+            'isSender': user_id == session['user_id'] if user_id else False,
+            'fromServer': True if not user_id else False
+        })
+
+    emit('get_messages', {'messages': messages}, room=room_code)
 
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True, port=app.config['FLASK_RUN_PORT'])
-    # socketio.run(app, debug=True, port=6969)
+    socket.run(app, debug=True, port=app.config['FLASK_RUN_PORT'])
