@@ -15,18 +15,6 @@ export const useSocketFuncs = () => {
     socket.emit("collect_messages");
   };
 
-  const onJoin = (
-    setRoomName: React.Dispatch<React.SetStateAction<string>>,
-  ) => {
-    socket.on("join_success", (data) => {
-      setRoomName(data.roomName);
-    });
-
-    return () => {
-      socket.off("join_success");
-    };
-  };
-
   const onMessage = (
     setMessages: React.Dispatch<React.SetStateAction<MessageType[]>>,
   ) => {
@@ -45,5 +33,5 @@ export const useSocketFuncs = () => {
     };
   };
 
-  return { onJoin, onMessage, emitSendMessages, emitCollectMessages };
+  return { onMessage, emitSendMessages, emitCollectMessages };
 };

@@ -6,9 +6,10 @@ import "../styles/chat.css"
 import { useController } from "../controllers/ChatController.ts";
 
 const Chat = () =>{
-  const {navigate, message, messages, useOnLoad, roomName, setMessage, isAuthorized, useSocketListen, isLoading, emitSendMessages} = useController();
+  const {navigate, message, messages, useOnLoad, roomName, setMessage, isAuthorized, useSocketListen, isLoading, emitSendMessages, messageContRef, useOnMessageScroll} = useController();
 
   useOnLoad();
+  useOnMessageScroll();
   useSocketListen();
 
   return (
@@ -27,7 +28,7 @@ const Chat = () =>{
                   <ButtonChat onClick={() => {navigate('/')}} img={close_img("size-9")} className="button_cont border-none w-[40px]"/>
                 </div>
                 {/* message components go down */}
-                <div className="w-full h-[92%] overflow-y-auto">
+                <div ref={messageContRef} className="w-full h-[92%] overflow-y-auto">
                   {messages.map((msg, key) => (
                     <Message username={msg.username} gender={msg.gender} msg={msg.msg} isSender={msg.isSender} fromServer={msg.fromServer} key={key}/>
                   ))}

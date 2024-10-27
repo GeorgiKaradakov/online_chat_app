@@ -82,7 +82,8 @@ def join_chat_room():
 @app.route('/is_authorized', methods=['GET'])
 def is_authorized():
     return jsonify({
-        'is_authorized': True if session else False
+        'is_authorized': True if session else False,
+        'roomName': get_room_name(session['user_id'] if session else '')
     })
 
 @socket.on('connect')
@@ -112,8 +113,8 @@ def user_join():
 def send_message(data):
     if 'user_id' not in session:
         socket.emit('auth_error')
-        return
 
+        return
     user_id = session['user_id']
     room_code = get_room_code(user_id)
     room_id = get_room_id(room_code)
