@@ -15,6 +15,7 @@ class User(db.Model):
     username = db.Column(db.String(50), nullable=False)
     gender = db.Column(Enum(GenderEnum), nullable=False)
     room_id = db.Column(db.String(12), db.ForeignKey('room.id'), nullable=True)
+    is_connected = db.Column(db.Boolean, nullable=False)
 
 class Room(db.Model):
     id = db.Column(db.String(12), primary_key=True, default=lambda: generate_random_id(12, Room), unique=True, nullable=False)

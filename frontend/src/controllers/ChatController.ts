@@ -8,12 +8,12 @@ import { MessageType } from "../types/types";
 export const useController = () => {
   const navigate = useNavigate();
 
-  const { onJoin, emitJoin } = useSocketFuncs();
+  const { onJoin, onMessage, emitSendMessages } = useSocketFuncs();
 
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [roomName, setRoomName] = useState("");
-  const [message, setMessage] = useState({ message: "" });
+  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<MessageType[]>([]);
 
   const getStatus = async () => {
@@ -41,20 +41,14 @@ export const useController = () => {
     }, []);
   };
 
-  const useJoinRoom = () => {
-    useEffect(() => {
-      if (isAuthorized && !isLoading) {
-        emitJoin();
-      }
-    }, [isAuthorized, isLoading]);
-  };
-
   const useSocketListen = () => {
     useEffect(() => {
       const cleanUpJoin = onJoin(setRoomName);
+      const clearMessageHandler = onMessage(setMessages);
 
       return () => {
         cleanUpJoin();
+        clearMessageHandler();
       };
     }, []);
   };
@@ -71,6 +65,6 @@ export const useController = () => {
     isAuthorized,
     useSocketListen,
     isLoading,
-    useJoinRoom,
+    emitSendMessages,
   };
 };

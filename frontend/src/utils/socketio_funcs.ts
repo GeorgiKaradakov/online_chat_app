@@ -1,6 +1,5 @@
 import { io } from "socket.io-client";
 import { BASE_URL } from "./constants";
-import { useNavigate } from "react-router-dom";
 import { MessageType } from "../types/types";
 
 export const socket = io(BASE_URL, {
@@ -8,14 +7,12 @@ export const socket = io(BASE_URL, {
 });
 
 export const useSocketFuncs = () => {
-  const navigate = useNavigate();
-
-  const emitJoin = () => {
-    socket.emit("join");
+  const emitSendMessages = (message: string) => {
+    socket.emit("send_message", { message: message });
   };
 
-  const emitGetMessages = () => {
-    socket.emit("get_messages");
+  const emitCollectMessages = () => {
+    socket.emit("collect_messages");
   };
 
   const onJoin = (
@@ -33,16 +30,20 @@ export const useSocketFuncs = () => {
   const onMessage = (
     setMessages: React.Dispatch<React.SetStateAction<MessageType[]>>,
   ) => {
-    socket.on("new_message", () => {
-      socket.emit("add_messages");
+    socket.on("message_received", () => {
+      emitCollectMessages();
     });
-    socket.on("get_messages", (data) => {});
+
+    socket.on("get_messages", (data) => {
+      console.log(data.messages);
+      setMessages(data.messages);
+    });
 
     return () => {
-      socket.off("new_message");
       socket.off("get_messages");
+      socket.off("message_received");
     };
   };
 
-  return { onJoin, emitJoin, onMessage, emitGetMessages };
+  return { onJoin, onMessage, emitSendMessages, emitCollectMessages };
 };
