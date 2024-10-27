@@ -4,3 +4,4 @@ Flask-SocketIO
 Flask-SQLAlchemy
 Flask-Session
 redis
+sqlite-web
