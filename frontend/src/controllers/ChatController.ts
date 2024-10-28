@@ -10,15 +10,20 @@ export const useController = () => {
 
   const messageContRef = useRef(null);
 
-  const { onMessage, emitSendMessages, emitCollectMessages } = useSocketFuncs();
+  const {
+    onMessage,
+    onConnect,
+    emitSendMessages,
+    emitCollectMessages,
+    socket,
+  } = useSocketFuncs();
 
-  const [isLoading, setIsLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [roomName, setRoomName] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<MessageType[]>([]);
 
-  const getStatusAndRoomName = async () => {
+  const getRoomName = async () => {
     try {
       const response = await axios.get(API.GET_STATUS_AND_ROOM_NAME, {
         withCredentials: true,
@@ -27,7 +32,6 @@ export const useController = () => {
         },
       });
 
-      setIsAuthorized(response.data.is_authorized);
       setRoomName(response.data.roomName);
     } catch (error) {
       console.log(error);
@@ -36,13 +40,7 @@ export const useController = () => {
 
   const useOnLoad = () => {
     useEffect(() => {
-      const fetchStatus = async () => {
-        await getStatusAndRoomName();
-        setIsLoading(false);
-      };
-      fetchStatus();
-
-      emitCollectMessages();
+      getRoomName();
     }, []);
   };
 
@@ -56,10 +54,15 @@ export const useController = () => {
 
   const useSocketListen = () => {
     useEffect(() => {
+      socket.connect();
+      const clearOnConnect = onConnect(setIsAuthorized);
+      emitCollectMessages();
       const clearMessageHandler = onMessage(setMessages);
 
       return () => {
+        clearOnConnect();
         clearMessageHandler();
+        socket.disconnect();
       };
     }, []);
   };
@@ -75,7 +78,6 @@ export const useController = () => {
     setRoomName,
     isAuthorized,
     useSocketListen,
-    isLoading,
     emitSendMessages,
     messageContRef,
     useOnMessageScroll,

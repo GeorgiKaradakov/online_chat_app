@@ -6,7 +6,7 @@ import "../styles/chat.css"
 import { useController } from "../controllers/ChatController.ts";
 
 const Chat = () =>{
-  const {navigate, message, messages, useOnLoad, roomName, setMessage, isAuthorized, useSocketListen, isLoading, emitSendMessages, messageContRef, useOnMessageScroll} = useController();
+  const {navigate, message, messages, useOnLoad, roomName, setMessage, isAuthorized, useSocketListen, emitSendMessages, messageContRef, useOnMessageScroll} = useController();
 
   useOnLoad();
   useOnMessageScroll();
@@ -14,7 +14,7 @@ const Chat = () =>{
 
   return (
     <>
-      {!isAuthorized && !isLoading ?
+      {!isAuthorized ?
         <div className="w-full h-full flex justify-center items-center text-center">
           <h1 className="text-red-500 text-5xl font-bold">You are not authorized to access this page!!</h1>
         </div>

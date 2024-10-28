@@ -4,6 +4,7 @@ import { MessageType } from "../types/types";
 
 export const socket = io(BASE_URL, {
   withCredentials: true,
+  autoConnect: false,
 });
 
 export const useSocketFuncs = () => {
@@ -13,6 +14,18 @@ export const useSocketFuncs = () => {
 
   const emitCollectMessages = () => {
     socket.emit("collect_messages");
+  };
+
+  const onConnect = (
+    setIsAuthorized: React.Dispatch<React.SetStateAction<boolean>>,
+  ) => {
+    socket.on("authorize", (data) => {
+      setIsAuthorized(data.isAuthorized);
+    });
+
+    return () => {
+      socket.off("authorize");
+    };
   };
 
   const onMessage = (
@@ -33,5 +46,11 @@ export const useSocketFuncs = () => {
     };
   };
 
-  return { onMessage, emitSendMessages, emitCollectMessages };
+  return {
+    onMessage,
+    onConnect,
+    emitSendMessages,
+    emitCollectMessages,
+    socket,
+  };
 };
