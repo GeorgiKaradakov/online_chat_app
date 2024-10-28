@@ -6,7 +6,7 @@ import "../styles/chat.css"
 import { useController } from "../controllers/ChatController.ts";
 
 const Chat = () =>{
-  const {navigate, message, messages, useOnLoad, roomName, setMessage, isAuthorized, useSocketListen, emitSendMessages, messageContRef, useOnMessageScroll} = useController();
+  const {navigate, message, messages, useOnLoad, roomName, setMessage, isAuthorized, useSocketListen, messageContRef, messageTextRef, useOnMessageScroll, sendMessage} = useController();
 
   useOnLoad();
   useOnMessageScroll();
@@ -36,8 +36,8 @@ const Chat = () =>{
               </div>
 
               <div className="p-2 h-[8%] w-[100%] flex border-4 border-sky-400 rounded-lg md:mt-3 md:h-[10%] lg:h-[10%]">
-                <input onChange={(e) => {setMessage(e.target.value)}} className="h-full w-5/6 bg-transparent text-white focus:outline-none focus:ring-0 focus:border-transparent" type="text" name="msg_cont" placeholder="message.."/>
-                <ButtonChat onClick={() => emitSendMessages(message)} img={send_img()} className="button_cont h-full w-1/6"/>
+                <input ref={messageTextRef} onChange={(e) => {setMessage(e.target.value)}} className="h-full w-5/6 bg-transparent text-white focus:outline-none focus:ring-0 focus:border-transparent" type="text" name="msg_cont" placeholder="message.."/>
+                <ButtonChat onClick={sendMessage} img={send_img()} className="button_cont h-full w-1/6"/>
               </div>
 
             </div>

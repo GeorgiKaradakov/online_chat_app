@@ -4,7 +4,7 @@ from flask_session import Session
 from flask_socketio import SocketIO, emit,  join_room, leave_room
 from models import Message, db, User, Room
 from config import AppConfig
-from queries import get_gender, get_room, get_room_code, get_room_id, get_room_name, get_user, get_username
+from queries import get_all_usernames, get_gender, get_room, get_room_code, get_room_id, get_room_name, get_user, get_username
 
 app = Flask(__name__)
 app.config.from_object(AppConfig)
@@ -40,6 +40,9 @@ def create_chat_room():
         db.session.commit()
         session['user_id'] = new_user.id
 
+    db.session.add(Message(content=f"Your room code is '{new_room.room_code}' !", user_id=None, room_id=new_room.id))
+    db.session.commit()
+
     response = {"message": "Data received successfully", 'room_id': new_room.id}
     return jsonify(response), 200
 
@@ -54,9 +57,11 @@ def join_chat_room():
     room_code = data.get('room_code')
 
     room = Room.query.filter_by(room_code=room_code).first()
-
     if not room:
         return jsonify({'Error', 'Room does not exist!'}), 404
+
+    if username in get_all_usernames(room.id):
+        return jsonify({'Error', 'Username already exists please try another one'}), 409
 
     if 'user_id' in session:
         user = User.query.filter_by(id=session['user_id']).first()
@@ -102,7 +107,8 @@ def user_join():
     room.user_count += 1
     db.session.commit()
 
-    emit('authorize', {'isAuthorized': True}, room=room_code)
+    emit('authorize', {'isAuthorized': True}, room=request.sid)
+    emit('message_received', room=room.room_code)
     print(f'{user.username} has joined the room!')
 
 
@@ -157,7 +163,6 @@ def disconnect():
     leave_room(room.room_code)
 
     user.is_connected = False
-    user.room_id = None
     room.user_count -= 1
     db.session.commit()
 

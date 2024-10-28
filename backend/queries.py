@@ -1,4 +1,4 @@
-from models import User, Message, Room
+from models import db, User, Room
 
 def get_room_name(user_id):
     user = User.query.filter_by(id = user_id).first()
@@ -22,3 +22,8 @@ def get_user(user_id):
 
 def get_room(room_code):
     return Room.query.filter_by(room_code = room_code).first()
+
+def get_all_usernames(room_id):
+    usernames = db.session.query(User.username).filter_by(room_id = room_id).all()
+
+    return [username[0] for username in usernames]

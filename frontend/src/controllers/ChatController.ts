@@ -8,7 +8,8 @@ import { MessageType } from "../types/types";
 export const useController = () => {
   const navigate = useNavigate();
 
-  const messageContRef = useRef(null);
+  const messageContRef = useRef<HTMLDivElement>(null);
+  const messageTextRef = useRef<HTMLInputElement>(null);
 
   const {
     onMessage,
@@ -67,6 +68,14 @@ export const useController = () => {
     }, []);
   };
 
+  const sendMessage = () => {
+    emitSendMessages(message);
+
+    if (messageTextRef.current) {
+      messageTextRef.current.value = "";
+    }
+  };
+
   return {
     navigate,
     message,
@@ -78,8 +87,9 @@ export const useController = () => {
     setRoomName,
     isAuthorized,
     useSocketListen,
-    emitSendMessages,
     messageContRef,
+    messageTextRef,
     useOnMessageScroll,
+    sendMessage,
   };
 };
