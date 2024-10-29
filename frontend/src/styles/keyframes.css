@@ -13,7 +13,7 @@
   }
 }
 
-@keyframes spin{
+@keyframes custom-spin{
   from{
     --angle: 0deg;
   }

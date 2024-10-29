@@ -16,9 +16,11 @@ export const useController = () => {
     onConnect,
     emitSendMessages,
     emitCollectMessages,
-    socket,
+    connectSocket,
+    disconnectSocket,
   } = useSocketFuncs();
 
+  const [isLoading, setIsLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [roomName, setRoomName] = useState("");
   const [message, setMessage] = useState("");
@@ -41,7 +43,12 @@ export const useController = () => {
 
   const useOnLoad = () => {
     useEffect(() => {
-      getRoomName();
+      const tempFetch = async () => {
+        await getRoomName();
+        // setIsLoading((prev) => !prev);
+      };
+
+      tempFetch();
     }, []);
   };
 
@@ -55,7 +62,7 @@ export const useController = () => {
 
   const useSocketListen = () => {
     useEffect(() => {
-      socket.connect();
+      connectSocket();
       const clearOnConnect = onConnect(setIsAuthorized);
       emitCollectMessages();
       const clearMessageHandler = onMessage(setMessages);
@@ -63,7 +70,7 @@ export const useController = () => {
       return () => {
         clearOnConnect();
         clearMessageHandler();
-        socket.disconnect();
+        disconnectSocket();
       };
     }, []);
   };
@@ -86,6 +93,7 @@ export const useController = () => {
     roomName,
     setRoomName,
     isAuthorized,
+    isLoading,
     useSocketListen,
     messageContRef,
     messageTextRef,

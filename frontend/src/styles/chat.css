@@ -23,7 +23,7 @@
   translate: -50% -50%;
   z-index: -1;
 
-  animation: 3s spin linear infinite;
+  animation: 3s custom-spin linear infinite;
 }
 
 .bg-cont::before {

@@ -8,6 +8,14 @@ export const socket = io(BASE_URL, {
 });
 
 export const useSocketFuncs = () => {
+  const connectSocket = () => {
+    socket.connect();
+  };
+
+  const disconnectSocket = () => {
+    socket.disconnect();
+  };
+
   const emitSendMessages = (message: string) => {
     socket.emit("send_message", { message: message });
   };
@@ -51,6 +59,7 @@ export const useSocketFuncs = () => {
     onConnect,
     emitSendMessages,
     emitCollectMessages,
-    socket,
+    connectSocket,
+    disconnectSocket,
   };
 };
