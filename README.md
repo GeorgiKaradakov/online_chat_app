@@ -20,28 +20,6 @@ The Online Chat App allows users to create and join chat rooms using unique room
 3. **Chat in Real-Time**: Send messages in real time, and see responses instantly.
 4. **Stay Synced Across Devices**: Join from any device, and the chat will sync up for all users.
 
-# Online Chat App
-
-Welcome to the Online Chat App! This real-time chat application lets users join chat rooms and communicate with others instantly. Built with a React frontend and a Flask backend, the app uses WebSockets for seamless, real-time messaging.
-
-## 📜 Description
-
-The Online Chat App allows users to create and join chat rooms using unique room codes. Users can send and receive messages instantly, view messages from others, and experience smooth, real-time communication across devices. 
-
-### Key Features
-
-- **Create Rooms**: Start a new chat room with a unique room code.
-- **Join Rooms**: Enter a room code to join an existing chat room.
-- **Real-Time Messaging**: Messages appear instantly using WebSockets.
-- **Persistent Chat History**: Messages are saved for each room, allowing you to view previous messages on reload.
-
-## 🚀 What Can You Do?
-
-1. **Create a Room**: Start a new chat room by generating a unique room code.
-2. **Join a Room**: Enter a room code to join an existing conversation.
-3. **Chat in Real-Time**: Send messages in real time, and see responses instantly.
-4. **Stay Synced Across Devices**: Join from any device, and the chat will sync up for all users.
-
 ## 🛠 How to Run the App
 
 ### Prerequisites
