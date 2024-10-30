@@ -3,7 +3,7 @@ import ButtonChat from "../ButtonChat";
 import RadioButton from "../radioButton";
 
 import "../../styles/popup.css";
-import { useEffect, forwardRef } from "react";
+import { forwardRef } from "react";
 import { useController } from "../../controllers/controller";
 
 
@@ -18,7 +18,7 @@ const PopUpWindow = forwardRef<HTMLDivElement, PPType>(
     });
 
     return (
-      <div className={`${isOpen ? className : "hidden"} absolute w-[90%] h-1/2 flex flex-col justify-center items-center md:w-2/3 lg:w-1/3`}>
+      <div className={`${isOpen ? className : "hidden"} absolute w-[90%] h-1/2 min-h-[460px] flex flex-col justify-center items-center md:w-2/3 lg:w-1/3`}>
         <div ref={ref || comp_ref} className="z-40 w-full h-full bg-gray-950 flex flex-col items-center rounded-xl">
           <h1 className="mt-4 text-red-300 font-bold text-2xl">{popUpName}</h1>
           <input

@@ -8,17 +8,17 @@ import Unauthorized from "../components/Unauthorized.tsx";
 import Loading from "../components/Loading.tsx";
 
 const Chat = () =>{
-  const {navigate, messages, useOnLoad, roomName, setMessage, isAuthorized, useSocketListen, messageContRef, messageTextRef, useOnMessageScroll, sendMessage, isLoading} = useController();
+  const {navigate, messages, useOnLoad, roomName, setMessage, isAuthorized, useSocketListen, messageContRef, messageTextRef, useOnMessageScroll, sendMessage, isLoading, OnEnterKeyPress} = useController();
 
   useOnLoad();
   useOnMessageScroll();
   useSocketListen();
 
   if(isLoading)
-    return <Loading />
+    return <Loading />;
 
   if(!isAuthorized)
-    return <Unauthorized />
+    return <Unauthorized />;
 
   return (
     <>
@@ -39,7 +39,7 @@ const Chat = () =>{
             </div>
 
             <div className="p-2 h-[8%] w-[100%] flex border-4 border-sky-400 rounded-lg md:mt-3 md:h-[10%] lg:h-[10%]">
-              <input ref={messageTextRef} onChange={(e) => {setMessage(e.target.value)}} className="h-full w-5/6 bg-transparent text-white focus:outline-none focus:ring-0 focus:border-transparent" type="text" name="msg_cont" placeholder="message.."/>
+              <input ref={messageTextRef} onChange={(e) => {setMessage(e.target.value)}} onKeyDown={OnEnterKeyPress} className="pr-2 h-full w-5/6 bg-transparent text-white focus:outline-none focus:ring-0 focus:border-transparent" type="text" name="msg_cont" placeholder="message.."/>
               <ButtonChat onClick={sendMessage} img={send_img()} className="button_cont h-full w-1/6"/>
             </div>
 

@@ -26,9 +26,11 @@ export const useSocketFuncs = () => {
 
   const onConnect = (
     setIsAuthorized: React.Dispatch<React.SetStateAction<boolean>>,
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   ) => {
     socket.on("authorize", (data) => {
       setIsAuthorized(data.isAuthorized);
+      setIsLoading(false);
     });
 
     return () => {

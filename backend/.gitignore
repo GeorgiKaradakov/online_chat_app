@@ -16,4 +16,5 @@ instance/
 .idea/
 
 .env
+.flaskenv
 .venv

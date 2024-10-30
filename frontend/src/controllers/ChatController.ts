@@ -28,7 +28,7 @@ export const useController = () => {
 
   const getRoomName = async () => {
     try {
-      const response = await axios.get(API.GET_STATUS_AND_ROOM_NAME, {
+      const response = await axios.get(API.GET_ROOM_NAME, {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
@@ -41,14 +41,13 @@ export const useController = () => {
     }
   };
 
+  const OnEnterKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") sendMessage();
+  };
+
   const useOnLoad = () => {
     useEffect(() => {
-      const tempFetch = async () => {
-        await getRoomName();
-        // setIsLoading((prev) => !prev);
-      };
-
-      tempFetch();
+      getRoomName();
     }, []);
   };
 
@@ -63,7 +62,7 @@ export const useController = () => {
   const useSocketListen = () => {
     useEffect(() => {
       connectSocket();
-      const clearOnConnect = onConnect(setIsAuthorized);
+      const clearOnConnect = onConnect(setIsAuthorized, setIsLoading);
       emitCollectMessages();
       const clearMessageHandler = onMessage(setMessages);
 
@@ -76,11 +75,14 @@ export const useController = () => {
   };
 
   const sendMessage = () => {
+    if (message.length == 0) return;
+
     emitSendMessages(message);
 
     if (messageTextRef.current) {
       messageTextRef.current.value = "";
     }
+    setMessage("");
   };
 
   return {
@@ -99,5 +101,6 @@ export const useController = () => {
     messageTextRef,
     useOnMessageScroll,
     sendMessage,
+    OnEnterKeyPress,
   };
 };
