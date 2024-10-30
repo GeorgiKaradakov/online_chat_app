@@ -88,7 +88,6 @@ The Online Chat App allows users to create and join chat rooms using unique room
     ```bash
     npm run dev
 
-
 ### 📚 Additional Notes
 
   - **Configuration**: Both frontend and backend configurations can be adjusted in their respective directories.
